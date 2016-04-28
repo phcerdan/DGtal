@@ -32,7 +32,6 @@
 #include <cstdlib>
 #include <DGtal/topology/DigitalTopology.h>
 #include <random>
-#include <DGtal/topology/NeighborhoodConfigurationsHelpers.h>
 //////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -455,7 +454,7 @@ DGtal::functions::skelWithTable(
     const TComplex & vc,
     const typename TComplex::Cell & cell)
 {
-  auto conf = functions::getComplexOccupancyConfiguration(
+  auto conf = functions::getSpelNeighborhoodConfigurationOccupancy(
       vc,
       vc.space().uCoords(cell),
       pointToMaskMap);

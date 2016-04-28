@@ -34,7 +34,6 @@
 #include <boost/graph/filtered_graph.hpp>
 #include <DGtal/topology/CubicalComplexFunctions.h>
 #include <DGtal/topology/NeighborhoodConfigurations.h>
-#include <DGtal/topology/NeighborhoodConfigurationsHelpers.h>
 #ifdef WITH_OPENMP
 // #include <experimental/algorithm>
 #include <omp.h>
@@ -172,7 +171,7 @@ DGtal::VoxelComplex<TKSpace, TObject, TCellContainer>::
 setSimplicityTable(const Alias<ConfigMap> input_table)
 {
   this->myTablePtr = input_table;
-  this->myPointToMaskPtr = functions::mapPointToBitMask<Point>() ;
+  this->myPointToMaskPtr = functions::mapZeroPointNeighborhoodToConfigurationMask<Point>() ;
   this->myIsTableLoaded = true;
 }
 
@@ -959,7 +958,7 @@ DGtal::VoxelComplex<TKSpace, TObject, TCellContainer>::isSimple (
   ASSERT(isSpel(input_cell) == true);
 
   if(myIsTableLoaded){
-    auto conf = functions::getComplexOccupancyConfiguration<Self>(
+    auto conf = functions::getSpelNeighborhoodConfigurationOccupancy<Self>(
 	*this,
 	 this->space().uCoords(input_cell),
 	 this->pointToMask()

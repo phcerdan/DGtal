@@ -38,7 +38,6 @@ namespace DGtal {
     const std::string tableTwoIsthmus =
       "@TABLE_DIR@/twoIsthmus_table26_6.txt";
   } // isthmusicity namespace
-
 } // DGtal namespace
 
 

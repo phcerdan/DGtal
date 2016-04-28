@@ -989,7 +989,7 @@ TEST_CASE_METHOD(Fixture_X, "X Thin with Isthmus, and tables", "[x][isthmus][thi
   SECTION( "Compute with skelWithTable (isIsthmus)" ){
     trace.beginBlock("skelIsthmus with table");
     auto table = *functions::loadTable(isthmusicity::tableIsthmus);
-    auto pointToMaskMap = *functions::mapPointToBitMask<FixtureObject::Point>();
+    auto pointToMaskMap = *functions::mapZeroPointNeighborhoodToConfigurationMask<FixtureObject::Point>();
     auto skelWithTableIsthmus =
       [&table, &pointToMaskMap](const FixtureComplex & fc,
                const FixtureComplex::Cell & c){
@@ -1007,7 +1007,7 @@ TEST_CASE_METHOD(Fixture_X, "X Thin with Isthmus, and tables", "[x][isthmus][thi
     vc.setSimplicityTable(functions::loadTable(simplicity::tableSimple26_6));
     vc.objectSet().clear();
     auto table = *functions::loadTable(isthmusicity::tableIsthmus);
-    auto pointToMaskMap = *functions::mapPointToBitMask<FixtureObject::Point>();
+    auto pointToMaskMap = *functions::mapZeroPointNeighborhoodToConfigurationMask<FixtureObject::Point>();
     auto skelWithTableIsthmus =
       [&table, &pointToMaskMap](const FixtureComplex & fc,
                const FixtureComplex::Cell & c){

@@ -406,7 +406,7 @@ protected:
  /*------------- Internal Methods --------------*/
   /**
    * pointToMask map, used internally in @ref VoxelComplex::isSimple for
-   * @ref LookUpTableFunctions.h::getComplexOccupancyConfiguration
+   * @ref LookUpTableFunctions.h::getSpelNeighborhoodConfigurationOccupancy
    *
    * @return reference to pointToMaskMap member.
    *
