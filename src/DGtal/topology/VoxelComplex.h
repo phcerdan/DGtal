@@ -112,6 +112,8 @@ class VoxelComplex : public CubicalComplex<TKSpace, TCellContainer> {
     using Integer = typename KSpace::Integer;
     /** Type for a cell in the space. */
     using Cell = typename KSpace::Cell;
+    /** Type for a PreCell in the space. */
+    using PreCell = typename Cell::PreCell;
     /** Type for a sequence of cells in the space. */
     using Cells = typename KSpace::Cells;
     /** Type of the digital space. */

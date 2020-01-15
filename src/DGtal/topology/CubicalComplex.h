@@ -48,6 +48,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include "DGtal/base/Common.h"
 #include "DGtal/base/ConstAlias.h"
+#include "DGtal/base/Clone.h"
 #include "DGtal/base/Alias.h"
 #include "DGtal/base/ContainerTraits.h"
 #include "DGtal/base/CSTLAssociativeContainer.h"
@@ -214,6 +215,7 @@ namespace DGtal
     static const Dimension dimension = KSpace::dimension;
     typedef typename KSpace::Integer     Integer;     ///< Type for integers in the space.
     typedef typename KSpace::Cell        Cell;        ///< Type for a cell in the space.
+    typedef typename Cell::PreCell       PreCell;     ///< Type for a precell in the space.
     typedef typename KSpace::Cells       Cells;       ///< Type for a sequence of cells in the space.
     typedef typename KSpace::Space       Space;       ///< Type of the digital space
     typedef typename KSpace::Size        Size;        ///< Type for a number of elements
@@ -515,7 +517,7 @@ namespace DGtal
     *
     * @param aK a Khalimsky space.
     */
-    CubicalComplex ( ConstAlias<KSpace> aK );
+    CubicalComplex ( Clone<KSpace> aK );
 
     /**
     * Copy constructor.
@@ -816,6 +818,7 @@ namespace DGtal
     * @return 'true' if and only if \a aCell belongs to this complex.
     */
     bool belongs( const Cell& aCell ) const;
+    bool belongs( const PreCell& aCell ) const;
 
     /**
     * @param d the dimension of cell \a aCell.
@@ -823,6 +826,7 @@ namespace DGtal
     * @return 'true' if and only if \a aCell belongs to this complex.
     */
     bool belongs( Dimension d, const Cell& aCell ) const;
+    bool belongs( Dimension d, const PreCell& aCell ) const;
 
     /**
     * Erases cell \a aCell from the complex.
@@ -1254,7 +1258,7 @@ namespace DGtal
   protected:
 
     /// The Khalimsky space in which lives the cubical complex.
-    const KSpace* myKSpace;
+    CowPtr<KSpace> myKSpace;
 
     /// An array of map Cell -> Data that stores cells dimension per
     /// dimension (i.e. cells of dimension 0 are stored in myCells[0],

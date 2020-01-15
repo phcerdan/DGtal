@@ -44,9 +44,16 @@
 #include <iostream>
 #include "DGtal/base/Common.h"
 #include "DGtal/topology/VoxelComplex.h"
+#include "DGtal/topology/SplitFunctions.h"
 //////////////////////////////////////////////////////////////////////////////
 namespace DGtal
 {
+  template <typename TComplex>
+    struct ThinningWithSplits {
+      SplittedComplexes<TComplex> splitted_complexes;
+      std::vector<TComplex> thin_complexes;
+    };
+
   namespace functions {
 
     template < typename TComplex >
@@ -64,6 +71,26 @@ namespace DGtal
        > Skel,
        bool verbose = false
     );
+
+    template < typename TComplex, typename TDistMap >
+      ThinningWithSplits<TComplex>
+      asymetricThinningSchemeWithSplits(
+          TComplex & vc ,
+          std::function<
+          std::pair<typename TComplex::Cell, typename TComplex::Data>(
+            const typename TComplex::Clique &)
+          > Select ,
+          std::function<
+          bool(
+            const TComplex & ,
+            const typename TComplex::Cell & )
+          > Skel,
+          size_t requested_number_of_splits,
+          size_t wide_of_block_sub_complex,
+          size_t number_of_threads,
+          const TDistMap & dist_map,
+          bool verbose = false
+          );
 
     template < typename TComplex >
     TComplex
