@@ -337,7 +337,6 @@ getSpelNeighborhoodConfigurationOccupancy
   Point p2 = Point::diagonal(  1 );
   Point c = Point::diagonal( 0 );
   Domain domain( p1, p2 );
-
   using KPreSpace = typename TComplex::KSpace::PreCellularGridSpace;
   const auto & kspace = input_complex.space();
   const auto & not_found( input_complex.end(3) );

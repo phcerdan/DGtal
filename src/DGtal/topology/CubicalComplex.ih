@@ -62,7 +62,7 @@ CubicalComplex()
 template <typename TKSpace, typename TCellContainer>
 inline
 DGtal::CubicalComplex<TKSpace, TCellContainer>::
-CubicalComplex( ConstAlias<KSpace> aK )
+CubicalComplex( Clone<KSpace> aK )
   : myKSpace( &aK ), myCells( dimension+1 )
 {
 }
@@ -603,7 +603,6 @@ bool
 DGtal::CubicalComplex<TKSpace, TCellContainer>::
 belongs( Dimension d, const Cell& aCell ) const
 {
-  ASSERT( d <= dimension );
   CellMapConstIterator it = myCells[ d ].find( aCell );
   return it != myCells[ d ].end();
 }

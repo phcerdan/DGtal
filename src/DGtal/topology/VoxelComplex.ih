@@ -65,7 +65,7 @@ DGtal::VoxelComplex<TKSpace, TCellContainer>::
 operator=(const Self &other)
 {
     if (this != &other) {
-        this->myKSpace = other.myKSpace;
+        this->myKSpace = Clone<TKSpace>(other.myKSpace);
         this->myCells = other.myCells;
         myTablePtr = other.myTablePtr;
         myPointToMaskPtr = other.myPointToMaskPtr;
