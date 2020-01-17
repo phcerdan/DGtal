@@ -33,6 +33,7 @@
 #include <DGtal/topology/DigitalTopology.h>
 #include <random>
 #include <DGtal/topology/SplitFunctions.h>
+#include <DGtal/io/viewers/Viewer3D.h>
 //////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,10 +93,17 @@ asymetricThinningScheme(
       trace.info() << "generation: " << generation <<
         " ; X.nbCells(3): " << xsize << std::endl;
   }
+
+  // All kspace voxels
+  // viewer.setFillColor(Color(40, 40, 40, 5));
+  // for ( auto it = vc.begin(3); it!= vc.end(3); ++it )
+  //   viewer << it->first;
+
   do {
     ++generation;
 
     Y = K ;
+
     /* Select voxels from critical d-cliques,
      * having priority d=3 down to 0 using Select(clique)
      * which returns the selected voxel. */
@@ -107,7 +115,7 @@ asymetricThinningScheme(
        * but which are critical for X. */
       x_y = X - Y;
       // x_y.close();
-      critical_cliques = X.criticalCliquesForD(d, x_y);
+      critical_cliques = X.criticalCliquesForD(d, x_y, verbose);
       for(auto & clique : critical_cliques){
         // if (d!=3)
         //   if (! (clique  <= (x_y)) )  continue ;
@@ -135,6 +143,18 @@ asymetricThinningScheme(
         // K.objectSet().insert(K.space().uCoords(new_voxel));
       }
     }
+    int argc(1);
+    char** argv(nullptr);
+    QApplication app(argc, argv);
+    Viewer3D<> viewer(vc.space());
+    const std::string title = "Generation " + std::to_string(generation);
+    viewer.setWindowTitle(QString::fromStdString(title));
+    viewer.show();
+    viewer.setFillColor(Color(0, 200, 0, 10*generation));
+    for ( auto it = X.begin(3); it!= X.end(3); ++it )
+      viewer << it->first;
+    viewer << Viewer3D<>::updateDisplay;
+    app.exec();
 
     // Stability Update:
     xsize = X.nbCells(3);
@@ -205,7 +225,7 @@ asymetricThinningSchemeWithSplits(
     // setBorderData(sc, border_iterators, fixed_data);
     // perform thinning in each subcomplex
     // TODO use threads here to do it in parallel
-    thin_complexes.emplace_back(asymetricThinningScheme(sc, Select, Skel, verbose));
+    thin_complexes.emplace_back(persistenceAsymetricThinningScheme(sc, Select, Skel, 0, verbose));
   }
   // thin_complexes[0] = asymetricThinningScheme(vc, Select, Skel, verbose);
   // Thin on complexes around blocks

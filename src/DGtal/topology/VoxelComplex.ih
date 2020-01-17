@@ -107,7 +107,7 @@ template <typename TKSpace, typename TCellContainer>
 template <typename TDigitalSet>
 inline void DGtal::VoxelComplex<TKSpace, TCellContainer>::construct(
     const TDigitalSet &input_set,
-    const Alias<ConfigMap> input_table)
+    const CountedPtr<ConfigMap> input_table)
 {
     Parent::construct(input_set);
     setSimplicityTable(input_table);
@@ -115,7 +115,7 @@ inline void DGtal::VoxelComplex<TKSpace, TCellContainer>::construct(
 
 template <typename TKSpace, typename TCellContainer>
 void DGtal::VoxelComplex<TKSpace, TCellContainer>::setSimplicityTable(
-    const Alias<ConfigMap> input_table)
+    const CountedPtr<ConfigMap> input_table)
 {
     this->myTablePtr = input_table;
     this->myPointToMaskPtr =
@@ -127,6 +127,8 @@ template <typename TKSpace, typename TCellContainer>
 void DGtal::VoxelComplex<TKSpace, TCellContainer>::copySimplicityTable(
     const Self & other)
 {
+    // if(other.isTableLoaded())
+        // this->setSimplicityTable(other.myTablePtr);
     myTablePtr = other.myTablePtr;
     myPointToMaskPtr = other.myPointToMaskPtr;
     myIsTableLoaded = other.myIsTableLoaded;
@@ -917,6 +919,10 @@ bool DGtal::VoxelComplex<TKSpace, TCellContainer>::isSimple(
     if (myIsTableLoaded) {
         auto conf = functions::getSpelNeighborhoodConfigurationOccupancy<Self>(
             *this, this->space().uCoords(input_cell), this->pointToMask());
+        // TODO remove debug
+        const bool by_thinning = isSimpleByThinning(input_cell);
+        const bool by_table = (*myTablePtr)[conf];
+        const bool is_different = by_thinning != by_table;
         return (*myTablePtr)[conf];
     } else
         return isSimpleByThinning(input_cell);

@@ -1059,6 +1059,7 @@ TEST_CASE_METHOD(Fixture_X, "X Thin with Isthmus, and tables",
 TEST_CASE_METHOD(Fixture_X, "X DistanceMap", "[x][distance][thin]") {
     using namespace DGtal::functions;
     auto &vc = complex_fixture;
+    vc.setSimplicityTable(functions::loadTable(simplicity::tableSimple26_6));
     auto &ks = vc.space();
     boost::ignore_unused_variable_warning(ks);
     using Predicate = Z3i::DigitalSet;

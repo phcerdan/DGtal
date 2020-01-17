@@ -83,6 +83,11 @@ namespace DGtal {
     Domain domain( p1, p2 );
     DigitalSet shapeSet( domain );
     TObject shape( dt, shapeSet );
+    KSpace ks;
+    const bool is_closed = true;
+    ks.init(p1, p2, is_closed);
+    TVoxelComplex vc(ks);
+    auto center_spel =ks.uSpel(c);
     unsigned int k = 0;
     for ( DomainConstIterator it = domain.begin(); it != domain.end(); ++it )
       if ( *it != c ) ++k;
@@ -97,16 +102,26 @@ namespace DGtal {
       }
       shape.pointSet().clear();
       shape.pointSet().insert( c );
+      vc.clear();
+      vc.insertCell(center_spel);
+      vc.voxelClose(center_spel);
+
       NeighborhoodConfiguration mask = 1;
       for ( DomainConstIterator it = domain.begin(); it != domain.end(); ++it )
       {
         if ( *it != c )
         {
-          if ( cfg & mask ) shape.pointSet().insert( *it );
+          if ( cfg & mask ) {
+            shape.pointSet().insert( *it );
+            const auto spel = ks.uSpel(*it);
+            vc.insertCell(spel);
+            vc.voxelClose(spel);
+          }
           mask <<= 1;
         }
       }
       bool simple = shape.isSimple( c );
+      const bool simple = vc.isSimpleByThinning( center_spel );
       map[ cfg ] = simple;
     }
   }

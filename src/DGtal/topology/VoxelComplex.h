@@ -189,7 +189,7 @@ class VoxelComplex : public CubicalComplex<TKSpace, TCellContainer> {
      */
     template < typename TDigitalSet >
     void construct(const TDigitalSet &input_set,
-                   const Alias<ConfigMap> input_table);
+                   const CountedPtr<ConfigMap> input_table);
 
     /**
      * Set precomputed look up table for simplicity.
@@ -198,7 +198,7 @@ class VoxelComplex : public CubicalComplex<TKSpace, TCellContainer> {
      *
      * @see LookUpTableFunctions.h
      */
-    void setSimplicityTable(const Alias<ConfigMap> input_table);
+    void setSimplicityTable(const CountedPtr<ConfigMap> input_table);
 
     /**
      * Copy table variables from other Complex.
@@ -538,9 +538,9 @@ class VoxelComplex : public CubicalComplex<TKSpace, TCellContainer> {
     /*------------- Data --------------*/
   protected:
     /** Look Up Table to speed computations of @ref isSimple. */
-    CountedPtrOrPtr<ConfigMap> myTablePtr;
+    CountedPtr<ConfigMap> myTablePtr;
     /** ConfigurationMask (LUT table). */
-    CountedPtrOrPtr<PointToMaskMap> myPointToMaskPtr;
+    CountedPtr<PointToMaskMap> myPointToMaskPtr;
     bool myIsTableLoaded{false}; ///< Flag if using a LUT for simplicity.
 
     /*------------- Internal Methods --------------*/
