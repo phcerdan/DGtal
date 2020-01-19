@@ -129,6 +129,9 @@
     (Pablo Hernandez-Cerdan, [#1488](https://github.com/DGtal-team/DGtal/pull/1488))
   - Fix loadTable not able to read compressed tables in Windows
     (Pablo Hernandez-Cerdan, [#1505](https://github.com/DGtal-team/DGtal/pull/1505))
+  - Adds functions to SplitFunctions header to divide a domain into hypercubes and the function
+    thinningWithSplits to VoxelComplexFunctions to perform a thinning in parallel.
+    (Pablo Hernandez-Cerdan,[#1448](https://github.com/DGtal-team/DGtal/pull/1448))
 
 - *Shapes package*
   - Add a moveTo(const RealPoint& point) method to implicit and star shapes

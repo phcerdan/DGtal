@@ -306,7 +306,6 @@ objectFromSpels(
 {
 
   const auto & cs = C.space();
-  // Get domain of C KSpace.
   typename TObject::Domain domain(cs.lowerBound(), cs.upperBound());
   typename TObject::DigitalSet dset(domain);
   for(auto it = C.begin(TKSpace::DIM);
