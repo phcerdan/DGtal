@@ -28,8 +28,8 @@
  * This file is part of the DGtal library.
  */
 
+#include "DGtal/helpers/StdDefsExtern.h"
 #include "DGtal/base/SetFunctions.h"
-#include "DGtal/helpers/StdDefs.h"
 #include "DGtal/topology/CubicalComplexFunctions.h"
 #include "DGtal/topology/CubicalComplex.h"
 #include "DGtal/topology/KhalimskyCellHashFunctions.h"

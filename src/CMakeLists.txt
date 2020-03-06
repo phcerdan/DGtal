@@ -16,7 +16,9 @@ include(DGtal/helpers/ModuleSRC.txt)
 include(Board/ModuleSRC.txt)
 ## Boost Add-ons
 include(BoostAddons/ModuleSRC.txt)
-
+## Explicit instantiation of standard types: StdDefs.cpp
+# Usage of #include StdDefsExtern.h instead of StdDefs.h will save compilation time
+set(DGTAL_SRC ${DGTAL_SRC} DGtal/helpers/StdDefs.cpp)
 
 #------------------------------------------------------------------------------
 # DGtal Target
