@@ -253,7 +253,7 @@ bool testITKImageWithMetadata()
   itk_image->SetSpacing(spacing);
   itk_image->SetDirection(direction);
 
-  // Check that getting index points is not affected by change of metadata.
+  // Check that the value of index points is not affected by a change of metadata.
   val = myImage.operator()(lowerBound);
   nbok += (val == 0); nb++;
   trace.info() << "Index: " << lowerBound << ". Value: " << val << ". Expected: " << 0 << std::endl;
@@ -348,7 +348,7 @@ bool testITKImageWithShiftDomain()
   nbok += ( new_upperBound == upperBound + domainShift); nb++;
   trace.info() << "upperBound: " << new_upperBound << ". Expected: " << upperBound + domainShift << std::endl;
 
-  // Check that getting index points is not affected by change of myDomainShift
+  // Check that the value of index points is not affected by a change of myDomainShift.
   val = myImage.operator()(lowerBound);
   nbok += (val == 0); nb++;
   trace.info() << "Index: " << lowerBound << ". Value: " << val << ". Expected: " << 0 << std::endl;

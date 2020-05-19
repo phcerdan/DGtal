@@ -21,6 +21,7 @@
  * @author David Coeurjolly (\c david.coeurjolly@liris.cnrs.fr )
  * @author Pierre Gueth (\c pierre.gueth@liris.cnrs.fr )
  * Laboratoire d'InfoRmatique en Image et Systèmes d'information - LIRIS (CNRS, UMR 5205), CNRS, France
+ * @author Pablo Hernandez-Cerdan (\c pablo.hernandez.cerdan@outlook.com)
  *
  * @date 2013/10/23
  *
@@ -325,21 +326,19 @@ namespace DGtal
        * DomainPoint refers to a Point between lowerBound and upperBound of myDomain.
        * They are different only when myDomainShift is different than Zero.
        *
-       * @param indexPoint
-       *
-       * @return domainPoint
+       * @param indexPoint a point holding valid index coordinates of the ITK image.
+       * @return domainPoint a point between lowerBound and upperBound
        */
       inline Point getDomainPointFromIndex(const Point &indexPoint) const;
 
       inline Point getIndexFromDomainPoint(const Point &domainPoint) const;
 
       /**
-       * The same as @getDomainPointFromItkIndex and @getIndexFromDomainPoint
+       * The same as @ref getDomainPointFromItkIndex and @ref getIndexFromDomainPoint
        * but using ITK types.
        *
-       * @param itkIndexPoint
-       *
-       * @return
+       * @param itkIndexPoint an IndexType of ITK.
+       * @return domainPoint a point between lowerBound and upperBound
        */
       inline Point getDomainPointFromItkIndex(const typename ITKImage::IndexType &itkIndexPoint) const;
 
@@ -354,8 +353,7 @@ namespace DGtal
        * Remember that GetOrigin() in ITK is the physical location of
        * the index {0,0...}. Not the location of the start index of the region.
        *
-       * @param indexPoint
-       *
+       * @param indexPoint a point holding valid index coordinates of the ITK image.
        * @return physical point of the index.
        */
       inline PhysicalPoint getPhysicalPointFromIndex(const Point &indexPoint) const;
