@@ -44,7 +44,7 @@
 #include "DGtal/io/DrawWithDisplay3DModifier.h"
 #include "DGtal/io/Color.h"
 #include "DGtal/images/ImageSelector.h"
-#include "DGtal/images/imagesSetsUtils/IntervalForegroundPredicate.h"
+#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/shapes/Shapes.h"
 #include "DGtal/helpers/StdDefs.h"
 #include "DGtal/topology/KhalimskySpaceND.h"
@@ -93,8 +93,9 @@ int main( int argc, char** argv )
   trace.beginBlock( "Reading vol file into an image." );
   typedef ImageSelector < Domain, int>::Type Image;
   Image image = VolReader<Image>::importVol(inputFilename);
-  typedef IntervalForegroundPredicate<Image> ThresholdedImage;
-  ThresholdedImage thresholdedImage( image, minThreshold, maxThreshold );
+  DigitalSet set3d (image.domain());
+  SetFromImage<DigitalSet>::append<Image>(set3d, image, 
+                                          minThreshold, maxThreshold);
   trace.endBlock();
   //! [volTrackBoundary-readVol]
   
@@ -119,10 +120,10 @@ int main( int argc, char** argv )
   //! [volTrackBoundary-ExtractingSurface]
   trace.beginBlock( "Extracting boundary by tracking from an initial bel." );
   SCellSet boundary;
-  SCell bel = Surfaces<KSpace>::findABel( ks, thresholdedImage, 100000 );
-  Surfaces<KSpace>::trackBoundary( boundary, ks, 
+  SCell bel = Surfaces<KSpace>::findABel( ks, set3d, 100000 );
+  Surfaces<KSpace>::trackBoundary( boundary, ks,
                                    surfAdj,
-                                   thresholdedImage, bel );
+                                   set3d, bel );
   trace.endBlock();
   //! [volTrackBoundary-ExtractingSurface]
 
@@ -141,6 +142,10 @@ int main( int argc, char** argv )
           it_end = boundary.end(); it != it_end; ++it, ++nbSurfels )
     {
       scell = dks.sCell( ks.sKCoords( *it ), ks.sSign( *it ) );
+      // TODO: Remove this comment
+      // trace.info() << "*it: " << *it <<
+      //   " sKoords(*it): " << ks.sKCoords( *it ) <<
+      //   " scell: " << scell << std::endl;
       viewer << scell;
     }
   viewer << Viewer3D<>::updateDisplay;
