@@ -69,7 +69,7 @@ namespace DGtal
      }
      @endcode
   */
-  template < DGtal::Dimension dim, 
+  template < DGtal::Dimension dim,
              typename TInteger = DGtal::int32_t>
   class CodedCellDirectionIterator
   {
@@ -196,7 +196,7 @@ namespace DGtal
        * @param _shift the index of the first non-zero bit
        * @param _nb_bits the number of non-zero bits
        */
-      BitField( Code _mask, Dimension _shift, Dimension _nb_bits ) 
+      BitField( Code _mask, Dimension _shift, Dimension _nb_bits )
         : mask( _mask ), inv_mask( ~mask ), shift( _shift ), nb_bits( _nb_bits ) {}
       /// The consecutive bits of the word where the field is defined.
       Code mask;
@@ -210,7 +210,7 @@ namespace DGtal
       /**
        * Given a cell code \a c, returns the part of the code
        * corresponding to the given field.
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @return the code \a c masked by the mask of \a bf.
        */
       Code select( Code c ) const
@@ -219,7 +219,7 @@ namespace DGtal
       /**
        * Given a cell code \a c, returns the part of the code
        * without the part corresponding to the given field.
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @return the code \a c masked by the inverted mask of \a bf.
        */
       Code unselect( Code c ) const
@@ -228,7 +228,7 @@ namespace DGtal
       /**
        * Given a cell code \a c, returns the part of the code
        * with the part corresponding to the given field flipped.
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @return the code \a c flipped by the  mask of \a bf.
        */
       Code inverse( Code c ) const
@@ -236,30 +236,30 @@ namespace DGtal
 
       /**
        * Given a cell code \a c, flips the part corresponding to this field.
-       * @param[in,out] c any cell or signed cell code 
+       * @param[in,out] c any cell or signed cell code
        */
       void flips( Code& c ) const
       { c ^= mask; }
 
       /**
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @return the code \a c with all bits of the bit field set to 1.
        */
       Code one( Code c ) const
       { return c | mask; }
 
       /**
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @return the code \a c with all bits of the bit field set to 0.
        */
       Code zero( Code c ) const
       { return c & inv_mask; }
 
- 
+
       /**
        * Given a cell code \a c and a value \a v, modifies the
        * code to set the given value in the given field.
-       * @param c any cell or signed cell code 
+       * @param c any cell or signed cell code
        * @param v an integer value (within bounds).
        * @return the code \a c updated.
        */
@@ -269,7 +269,7 @@ namespace DGtal
       /**
        * Given a cell code \a c and a value \a v, modifies the
        * code to set the given value in the given field.
-       * @param[in,out] c any cell or signed cell code 
+       * @param[in,out] c any cell or signed cell code
        * @param v an integer value (within bounds).
        */
       void setValue( Code& c, Integer v ) const
@@ -283,7 +283,7 @@ namespace DGtal
       { return ( c & inv_mask ) | d; }
 
       /**
-       * Given a cell code \a c, a field \a bf and a coded value [FCODE], 
+       * Given a cell code \a c, a field \a bf and a coded value [FCODE],
        * modifies the code to set the given coded value in the given field.
        */
       void changeCode( Code& c, Code d ) const
@@ -296,7 +296,7 @@ namespace DGtal
       { return ((Code)v) << shift; }
 
       /**
-       * Given a field \a bf and a cell code \a c, returns the value of this 
+       * Given a field \a bf and a cell code \a c, returns the value of this
        * field.
        */
       Integer value( Code c ) const
@@ -310,7 +310,7 @@ namespace DGtal
       { return NumberTraits<Code>::ONE << ( b + shift ); }
 
       /**
-       * Given a cell code \a c and a bit index \a b in the 
+       * Given a cell code \a c and a bit index \a b in the
        * field, returns true/false depending if this bit is set in the specified
        * field of the code.
        */
@@ -1507,14 +1507,14 @@ namespace DGtal
      */
     Codes myCodedCoordIncrs;
     /**
-     * For each possible cell type, it is the coded value of a positive 
-     * increment in each coordinate set to 1 of the cell type. 
+     * For each possible cell type, it is the coded value of a positive
+     * increment in each coordinate set to 1 of the cell type.
      * Ex: if the y-coordinate is shift by 8, then
      * myUCodedCellTypeIncrs[ 3 ] = &0x00000101
      */
     Codes myCodedCellTypeIncrs;
     /**
-     * This array stores the different coded vertices of any cell-type. 
+     * This array stores the different coded vertices of any cell-type.
      * For instance, for the code 5 (101), then there are four possible
      * vertices: 0x00000000, 0x00000001, 0x00010000, 0x00010001
      * if x-coordinate and y-coordinate take each 8 bits.
@@ -1553,7 +1553,7 @@ namespace DGtal
      * If 'false' then they cannot be low incident.
      * Otherwise, you should check the table 'm_uid_coded_coords_vtx' to get
      * the different possible coordinate increments where the bit of the code
-     * is 1. 
+     * is 1.
      */
     std::vector<bool> myLowIncident;
 
@@ -1564,14 +1564,14 @@ namespace DGtal
      * If 'false' then they cannot be up incident.
      * Otherwise, you should check the table 'm_uid_coded_coords_vtx' to get
      * the different possible coordinate increments where the bit of the code
-     * is 1. 
+     * is 1.
      */
     std::vector<bool> myUpIncident;
 
     /**
      * Array of size (1<<dim())*dim(). For a given unsigned cell-type [c] and a
-     * given direction [k], stores the sign of the permutation of coordinates to 
-     * get back [c]. 'true' is +1, 'false' is -1. 
+     * given direction [k], stores the sign of the permutation of coordinates to
+     * get back [c]. 'true' is +1, 'false' is -1.
      * Useful to compute sign of incidence.
      * Exemples: <pre>
      * if [c]=zyx and [k]=y then [c]-[k]=zx and sign(zyx,y.zx) = -1 (1 perm)
@@ -1604,7 +1604,7 @@ namespace DGtal
     /**
      * Array of size (1<<(dim()+1)^2. For two given signed cell-type [c1] and
      * [c2], stores the low incidence value (c1:c2). Note that this array is a
-     * very sparse matrix, since this value may be different from 0 only if 
+     * very sparse matrix, since this value may be different from 0 only if
      * c2 is one-dimension less than c1.
      * It is a LUT for computing incidence matrices.
      * To get the index in the array: m_permutation[ ( c1 << (n+1) ) + c2 ]
@@ -1625,14 +1625,14 @@ namespace DGtal
 
     // ------------------------- Vector attributes ------------------------------
     /**
-     * An array of vector which represents the different vector basis 
+     * An array of vector which represents the different vector basis
      * for each type of cell. Any vector formed with linear combinations of
      * vector of the basis has a null scalar product with any vector of the
      * orthogonal basis.
      */
     std::vector<Vector> myBasis;
     /**
-     * An array of vector which represents the different orthogonal vector basis 
+     * An array of vector which represents the different orthogonal vector basis
      * for each type of cell.  Any vector formed with linear combinations of
      * vector of the orthogonal basis has a null scalar product with any vector
      * of the basis.
@@ -1678,7 +1678,7 @@ namespace DGtal
    * @param object the object of class 'CodedKhalimskySpaceND' to write.
    * @return the output stream after the writing.
    */
-  template < DGtal::Dimension dim, 
+  template < DGtal::Dimension dim,
              typename TInteger,
              typename TCode >
   std::ostream&

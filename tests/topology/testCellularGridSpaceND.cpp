@@ -546,7 +546,7 @@ testKSpaceElementaryMethods()
   K.printSCell( std::cout, Dp1_Dp0 );
   trace.info() << " D^+_0 D^+_1( p )  = ";
   K.printlnSCell( std::cout, Dp0_Dp1 );
-  
+
   std::cout << "pixel   dirs =";
   K.printSCell( std::cout, pixel );
   for ( DirIterator q = K.sDirs( pixel ); q != 0; ++q ) std::cout << " " << *q;
@@ -587,21 +587,6 @@ int main( int argc, char** argv )
   BOOST_CONCEPT_ASSERT(( concepts::CCellularGridSpaceND< K3 > ));
   BOOST_CONCEPT_ASSERT(( concepts::CCellularGridSpaceND< K4 > ));
 
-  // bool res = testCellularGridSpaceND<K2>()
-  //   && testCellularGridSpaceND<K3>()
-  //   && testCellularGridSpaceND<K4>()
-  //   && testSurfelAdjacency<K2>()
-  //   && testSurfelAdjacency<K3>()
-  //   && testSurfelAdjacency<K4>()
-  //   && testCellDrawOnBoard<K2>()
-  //   && testFindABel<K3>()
-  //   && testCellularGridSpaceNDFaces<K2>()
-  //   && testCellularGridSpaceNDFaces<K3>()
-  //   && testCellularGridSpaceNDFaces<K4>()
-  //   && testCellularGridSpaceNDCoFaces<K2>()
-  //   && testCellularGridSpaceNDCoFaces<K3>()
-  //   && testCellularGridSpaceNDCoFaces<K4>();
-
   bool res = true
     && testCellularGridSpaceND<K2>()
     && testCellularGridSpaceND<CK2>()
@@ -628,7 +613,7 @@ int main( int argc, char** argv )
     && testKSpaceElementaryMethods<K2>()
     && testKSpaceElementaryMethods<CK2>()
     ;
-  
+
   trace.emphase() << ( res ? "Passed." : "Error." ) << endl;
   trace.endBlock();
   return res ? 0 : 1;

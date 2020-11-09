@@ -38,11 +38,11 @@
 
 #if (!defined(WIN32))
 /*template < Dimension dim, typename TInteger >
-const Dimension 
+const Dimension
 DGtal::CodedKhalimskySpaceND< dim, TInteger >::dimension = dim;
 */
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
-const DGtal::Dimension 
+const DGtal::Dimension
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::DIM = dim;
 
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
@@ -74,7 +74,7 @@ CodedCellDirectionIterator( Integer dirs )
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger>
 inline
-DGtal::Dimension 
+DGtal::Dimension
 DGtal::CodedCellDirectionIterator<dim, TInteger>::
 operator*() const
 {
@@ -83,7 +83,7 @@ operator*() const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger>
 inline
-DGtal::CodedCellDirectionIterator<dim, TInteger>& 
+DGtal::CodedCellDirectionIterator<dim, TInteger>&
 DGtal::CodedCellDirectionIterator<dim, TInteger>::
 operator++()
 {
@@ -167,7 +167,7 @@ CodedKhalimskySpaceND()
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-bool 
+bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 init( const Point & lower,
       const Point & upper,
@@ -199,7 +199,7 @@ init( const Point & lower,
       myNbSpels               *= mySizes[ i ];
       Size size_axis           = myIsClosed ? mySizes[ i ] : mySizes[ i ] - 1;
       Dimension nb_bits        = 1 + Bits::mostSignificantBit( size_axis );
-      myBFCoords[ i ]          = BitField( ( ( one << nb_bits ) - one ) << shift, 
+      myBFCoords[ i ]          = BitField( ( ( one << nb_bits ) - one ) << shift,
                                            shift, nb_bits );
       myCodedCoordMaxs[ i ]    = ( mySizes[ i ] - one ) << shift;
       myCodedAllCoordMax      += myCodedCoordMaxs[ i ];
@@ -211,8 +211,8 @@ init( const Point & lower,
   Dimension dirs_shift = shift;
   // Computing mask for all coords
   myBFAllCoords = BitField( ( one << shift ) - one, 0, shift );
-  // Computing mask for directions 
-  myBFAllDirs   = BitField( ( ( one << dimension ) - one ) << dirs_shift, 
+  // Computing mask for directions
+  myBFAllDirs   = BitField( ( ( one << dimension ) - one ) << dirs_shift,
                             dirs_shift, dimension );
   myBFDirs      = BitFields( dimension );
   for ( Dimension i = 0; i < dimension; ++i )
@@ -224,7 +224,7 @@ init( const Point & lower,
   // Computing mask for sign of SCell
   myBFSign           = BitField( one << shift, shift, 1 );
   /// Field to reach all directions and the sign in a coded SCell (no meaning for Cell).
-  myBFAllDirsAndSign = BitField( ( ( one << (dimension+1) ) - one ) << dirs_shift, 
+  myBFAllDirsAndSign = BitField( ( ( one << (dimension+1) ) - one ) << dirs_shift,
                                  dirs_shift, dimension+1 );
   myNbBits          += 1;
   shift             += 1;
@@ -251,7 +251,7 @@ init( const Point & lower,
     {
       Code uid = 0;
       for ( Dimension b = 0; b < dimension; ++b )
-	if ( i & ( 1 << b ) ) 
+	if ( i & ( 1 << b ) )
           uid |= myCodedCoordIncrs[ b ];
       myCodedCellTypeIncrs[ i ] = uid;
     }
@@ -266,7 +266,7 @@ init( const Point & lower,
 	  if ( myLowIncident[ ( i << dimension ) + j ] )
 	    {
               ASSERT( i >= j );
-              myCodedCoordsVtx[ ( i << dimension ) + nb ] 
+              myCodedCoordsVtx[ ( i << dimension ) + nb ]
 		= myCodedCellTypeIncrs[ i - j ];
 	      nb++;
 	    }
@@ -305,7 +305,7 @@ init( const Point & lower,
             clow = uGetIncr( clow, k );
           if ( uKCoord( cup, k )  > myUpperValidCell[ k ] )
             cup  = uGetDecr( cup,  k );
-        } 
+        }
       myLowerCellCodes[ i ] = clow;
       myUpperCellCodes[ i ] = cup;
     }
@@ -341,8 +341,8 @@ computeBinomials()
 {
   myBinomials = std::vector<Integer>( dimension + 1, 0 );
   myBinomials[ 0 ] = 1;
-  for ( Dimension i = 1; i <= dimension; ++i )  
-    for ( Dimension j = 1; j <= dimension; ++j )  
+  for ( Dimension i = 1; i <= dimension; ++i )
+    for ( Dimension j = 1; j <= dimension; ++j )
       myBinomials[ j ] += myBinomials[ j - 1 ];
 }
 
@@ -445,7 +445,7 @@ size( DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-TInteger 
+TInteger
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 min( DGtal::Dimension k ) const
 {
@@ -454,7 +454,7 @@ min( DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-TInteger 
+TInteger
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 max( DGtal::Dimension k ) const
 {
@@ -513,8 +513,8 @@ typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uCell( Point kp ) const
 {
-  ASSERT( myLowerValidCell.inf( kp ) == myLowerValidCell ); 
-  ASSERT( myUpperValidCell.sup( kp ) == myUpperValidCell ); 
+  ASSERT( myLowerValidCell.inf( kp ) == myLowerValidCell );
+  ASSERT( myUpperValidCell.sup( kp ) == myUpperValidCell );
   kp -= myLowerCell;
   typename Point::ConstIterator it  = kp.begin();
   Cell c = NumberTraits<Code>::ZERO;
@@ -569,7 +569,7 @@ uSpel( const Point& p ) const
 {
   // The directions bitfield mask corresponds to a cell open in all
   // directions, hence a spel.
-  return uCell( p, myBFAllDirs.mask ); 
+  return uCell( p, myBFAllDirs.mask );
 }
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
@@ -622,7 +622,7 @@ uKCoord( Cell c, DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Integer 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Integer
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uCoord( Cell c, DGtal::Dimension k ) const
 {
@@ -668,7 +668,7 @@ sKCoord( SCell c, DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Integer 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Integer
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sCoord( SCell c, DGtal::Dimension k ) const
 {
@@ -712,7 +712,7 @@ sSign( SCell c ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 signs( Cell p, Sign s ) const
 {
@@ -721,7 +721,7 @@ signs( Cell p, Sign s ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cell 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 unsigns( SCell p ) const
 {
@@ -730,7 +730,7 @@ unsigns( SCell p ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sOpp( SCell p ) const
 {
@@ -972,7 +972,7 @@ sOrthDirs( SCell p ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-DGtal::Dimension 
+DGtal::Dimension
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uOrthDir( Cell s ) const
 {
@@ -983,7 +983,7 @@ uOrthDir( Cell s ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-DGtal::Dimension 
+DGtal::Dimension
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sOrthDir( SCell s ) const
 {
@@ -1026,17 +1026,17 @@ uGetIncr( Cell p, DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-bool 
+bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uIsMax( Cell p, DGtal::Dimension k ) const
 {
-  return myBFCoords[ k ].select( p ) 
+  return myBFCoords[ k ].select( p )
     ==   myBFCoords[ k ].select( myUpperCellCodes[ uTopology( p ) ] );
 }
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-bool 
+bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uIsInside( Cell p, DGtal::Dimension k ) const
 {
@@ -1070,7 +1070,7 @@ bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uIsMin( Cell p, DGtal::Dimension k ) const
 {
-  return myBFCoords[ k ].select( p ) 
+  return myBFCoords[ k ].select( p )
     ==   myBFCoords[ k ].select( myLowerCellCodes[ uTopology( p ) ] );
 }
 //-----------------------------------------------------------------------------
@@ -1217,17 +1217,17 @@ sGetIncr( SCell p, DGtal::Dimension k ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-bool 
+bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sIsMax( SCell p, DGtal::Dimension k ) const
 {
-  return myBFCoords[ k ].select( p ) 
+  return myBFCoords[ k ].select( p )
     ==   myBFCoords[ k ].select( myUpperCellCodes[ sTopology( p ) ] );
 }
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-bool 
+bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sIsInside( SCell p, DGtal::Dimension k ) const
 {
@@ -1261,7 +1261,7 @@ bool
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sIsMin( SCell p, DGtal::Dimension k ) const
 {
-  return myBFCoords[ k ].select( p ) 
+  return myBFCoords[ k ].select( p )
     ==   myBFCoords[ k ].select( myLowerCellCodes[ sTopology( p ) ] );
 }
 //-----------------------------------------------------------------------------
@@ -1380,7 +1380,7 @@ sNext( SCell & p, SCell lower, SCell upper ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cells 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cells
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uNeighborhood( Cell c ) const
 {
@@ -1396,7 +1396,7 @@ uNeighborhood( Cell c ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCells 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCells
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sNeighborhood( SCell c ) const
 {
@@ -1412,7 +1412,7 @@ sNeighborhood( SCell c ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cells 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cells
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uProperNeighborhood( Cell c ) const
 {
@@ -1427,7 +1427,7 @@ uProperNeighborhood( Cell c ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCells 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCells
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sProperNeighborhood( SCell c ) const
 {
@@ -1442,7 +1442,7 @@ sProperNeighborhood( SCell c ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cell 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::Cell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uAdjacent( Cell p, DGtal::Dimension k, bool up ) const
 {
@@ -1451,7 +1451,7 @@ uAdjacent( Cell p, DGtal::Dimension k, bool up ) const
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
-typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell 
+typename DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::SCell
 DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sAdjacent( SCell p, DGtal::Dimension k, bool up ) const
 {
@@ -1468,8 +1468,8 @@ DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 uIncident( Cell c, DGtal::Dimension k, bool up ) const
 {
   ASSERT( k < dimension );
-  ASSERT( ( ! up ) || ( uKCoord( c, k ) < myUpperValidCell[ k ] ) ); 
-  ASSERT( (   up ) || ( myLowerValidCell[ k ] < uKCoord( c, k ) ) ); 
+  ASSERT( ( ! up ) || ( uKCoord( c, k ) < myUpperValidCell[ k ] ) );
+  ASSERT( (   up ) || ( myLowerValidCell[ k ] < uKCoord( c, k ) ) );
   myBFDirs[ k ].flips( c );
   if ( myBFDirs[ k ].bitCheck( c, 0 ) )
     { // c is now open
@@ -1490,10 +1490,10 @@ DGtal::CodedKhalimskySpaceND<dim, TInteger, TCode>::
 sIncident( SCell c, DGtal::Dimension k, bool up ) const
 {
   ASSERT( k < dimension );
-  ASSERT( ( ! up ) || ( sKCoord( c, k ) < myUpperValidCell[ k ] ) ); 
-  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( c, k ) ) ); 
+  ASSERT( ( ! up ) || ( sKCoord( c, k ) < myUpperValidCell[ k ] ) );
+  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( c, k ) ) );
   Dimension cell_type = myBFAllDirsAndSign.value( c ) + ( k << ( dimension + 1 ) );
-  if ( up ) 
+  if ( up )
     {
       myBFAllDirsAndSign.setValue( c, mySIncident2[ cell_type ] );
       if ( sIsOpen( c, k ) ) return c;
@@ -1517,7 +1517,7 @@ uLowerIncident( Cell c ) const
   Integer dirs = myBFAllDirs.value( c );
   for ( Dimension k = 0; k < dimension; ++k, dirs >>= 1 )
     {
-      if ( dirs & 1 ) 
+      if ( dirs & 1 )
         {
           Integer x = uKCoord( c, k );
           if ( myLowerValidCell[ k ] < x )
@@ -1539,7 +1539,7 @@ uUpperIncident( Cell c ) const
   Integer dirs = ~ myBFAllDirs.value( c );
   for ( Dimension k = 0; k < dimension; ++k, dirs >>= 1 )
     {
-      if ( dirs & 1 ) 
+      if ( dirs & 1 )
         {
           Integer x = uKCoord( c, k );
           if ( myLowerValidCell[ k ] < x )
@@ -1561,7 +1561,7 @@ sLowerIncident( SCell c ) const
   Integer dirs = myBFAllDirs.value( c );
   for ( Dimension k = 0; k < dimension; ++k, dirs >>= 1 )
     {
-      if ( dirs & 1 ) 
+      if ( dirs & 1 )
         {
           Integer x = sKCoord( c, k );
           if ( myLowerValidCell[ k ] < x )
@@ -1583,7 +1583,7 @@ sUpperIncident( SCell c ) const
   Integer dirs = ~ myBFAllDirs.value( c );
   for ( Dimension k = 0; k < dimension; ++k, dirs >>= 1 )
     {
-      if ( dirs & 1 ) 
+      if ( dirs & 1 )
         {
           Integer x = sKCoord( c, k );
           if ( myLowerValidCell[ k ] < x )
@@ -1675,9 +1675,9 @@ sDirectIncident( SCell p, DGtal::Dimension k ) const
   ASSERT( k < dimension );
   Dimension cell_type = myBFAllDirsAndSign.value( p ) + ( k << ( dimension + 1 ) );
   bool up = mySDirectOrientation[ cell_type ];
-  ASSERT( ( ! up ) || ( sKCoord( p, k ) < myUpperValidCell[ k ] ) ); 
-  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( p, k ) ) ); 
-  if ( up ) 
+  ASSERT( ( ! up ) || ( sKCoord( p, k ) < myUpperValidCell[ k ] ) );
+  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( p, k ) ) );
+  if ( up )
     {
       myBFAllDirsAndSign.setValue( p, mySIncident2[ cell_type ] );
       if ( sIsOpen( p, k ) ) return p;
@@ -1700,9 +1700,9 @@ sIndirectIncident( SCell p, DGtal::Dimension k ) const
   ASSERT( k < dimension );
   Dimension cell_type = myBFAllDirsAndSign.value( p ) + ( k << ( dimension + 1 ) );
   bool up = ! mySDirectOrientation[ cell_type ];
-  ASSERT( ( ! up ) || ( sKCoord( p, k ) < myUpperValidCell[ k ] ) ); 
-  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( p, k ) ) ); 
-  if ( up ) 
+  ASSERT( ( ! up ) || ( sKCoord( p, k ) < myUpperValidCell[ k ] ) );
+  ASSERT( (   up ) || ( myLowerValidCell[ k ] < sKCoord( p, k ) ) );
+  if ( up )
     {
       myBFAllDirsAndSign.setValue( p, mySIncident2[ cell_type ] );
       if ( sIsOpen( p, k ) ) return p;
@@ -1743,7 +1743,7 @@ printCell( std::ostream & out, Cell c ) const
       if ( i != dimension - 1 ) out << ",";
     }
   out << ")";
-} 
+}
 //-----------------------------------------------------------------------------
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
@@ -1800,7 +1800,7 @@ isValid() const
 template < DGtal::Dimension dim, typename TInteger, typename TCode >
 inline
 std::ostream&
-DGtal::operator<< ( std::ostream & out, 
+DGtal::operator<< ( std::ostream & out,
                     const CodedKhalimskySpaceND<dim, TInteger, TCode> & object )
 {
   object.selfDisplay( out );
