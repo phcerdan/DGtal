@@ -74,7 +74,7 @@ namespace DGtal
   class CodedCellDirectionIterator
   {
     //Integer must be signed to characterize a ring.
-    BOOST_CONCEPT_ASSERT(( CInteger<TInteger> ) );
+    BOOST_CONCEPT_ASSERT(( concepts::CInteger<TInteger> ) );
 
   public:
     /// Self type.
@@ -165,8 +165,8 @@ namespace DGtal
   class CodedKhalimskySpaceND
   {
     //Integer must be signed to characterize a ring.
-    BOOST_CONCEPT_ASSERT(( CInteger<TInteger> ) );
-    BOOST_CONCEPT_ASSERT(( CUnsignedNumber<TCode> ) );
+    BOOST_CONCEPT_ASSERT(( concepts::CInteger<TInteger> ) );
+    BOOST_CONCEPT_ASSERT(( concepts::CUnsignedNumber<TCode> ) );
 
   public:
     /// Self type.

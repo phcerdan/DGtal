@@ -16,6 +16,7 @@ SET(DGTAL_TESTS_SRC
    testParDirCollapse
    testHalfEdgeDataStructure
    testIndexedDigitalSurface
+   testCellularGridSpaceND
 )
 
 FOREACH(FILE ${DGTAL_TESTS_SRC})

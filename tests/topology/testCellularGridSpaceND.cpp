@@ -583,9 +583,9 @@ int main( int argc, char** argv )
   typedef CodedKhalimskySpaceND<3, DGtal::int32_t, DGtal::uint64_t> CK3;
   typedef CodedKhalimskySpaceND<4, DGtal::int32_t, DGtal::uint64_t> CK4;
 
-  BOOST_CONCEPT_ASSERT(( CCellularGridSpaceND< K2 > ));
-  BOOST_CONCEPT_ASSERT(( CCellularGridSpaceND< K3 > ));
-  BOOST_CONCEPT_ASSERT(( CCellularGridSpaceND< K4 > ));
+  BOOST_CONCEPT_ASSERT(( concepts::CCellularGridSpaceND< K2 > ));
+  BOOST_CONCEPT_ASSERT(( concepts::CCellularGridSpaceND< K3 > ));
+  BOOST_CONCEPT_ASSERT(( concepts::CCellularGridSpaceND< K4 > ));
 
   // bool res = testCellularGridSpaceND<K2>()
   //   && testCellularGridSpaceND<K3>()
