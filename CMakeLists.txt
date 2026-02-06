@@ -2,8 +2,9 @@
 # Project definition
 # -----------------------------------------------------------------------------
 cmake_minimum_required (VERSION 3.11)
-cmake_policy(SET CMP0048 OLD) # project() doesn't have VERSION
-project (DGtal)
+project (DGtal
+  VERSION 1.2
+)
 
 # -----------------------------------------------------------------------------
 # By default, do not warn when built on machines using only VS Express:
